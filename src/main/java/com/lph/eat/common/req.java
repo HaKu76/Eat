@@ -1,12 +1,14 @@
 package com.lph.eat.common;
 
 import lombok.Data;
+
 import java.util.HashMap;
 import java.util.Map;
+
 /*
-* 通用返回结果，服务端响应的数据封装成这个类
-*
-*/
+ * 通用返回结果，服务端响应的数据封装成这个类
+ *
+ */
 @Data
 public class req<T> {
 
@@ -25,6 +27,7 @@ public class req<T> {
         r.code = 1;
         return r;
     }
+
     // 申请失败返回结果
     public static <T> req<T> error(String msg) {
         req r = new req();
@@ -32,6 +35,7 @@ public class req<T> {
         r.code = 0;
         return r;
     }
+
     // 动态数据
     public req<T> add(String key, Object value) {
         this.map.put(key, value);
