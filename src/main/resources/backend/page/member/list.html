@@ -58,6 +58,8 @@
           prop="phone"
           label="手机号"
         ></el-table-column>
+<!--        默认值-->
+<!--        <el-table-column label="账号状态" prop="status">-->
         <el-table-column label="账号状态">
           <template slot-scope="scope">
             {{ String(scope.row.status) === '0' ? '已禁用' : '正常' }}
@@ -90,6 +92,7 @@
           </template>
         </el-table-column>
       </el-table>
+      <!--每页页大小page-sizes可修改-->
       <el-pagination
         class="pageList"
         :page-sizes="[2]"
@@ -170,7 +173,7 @@
               },true)
             }
           },
-          //状态修改
+          //点击禁用/启动，状态修改
           statusHandle (row) {
             this.id = row.id
             this.status = row.status
