@@ -1,6 +1,5 @@
 package com.lph.eat.common;
 
-import com.baomidou.mybatisplus.extension.api.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,15 +20,16 @@ public class GlobalExceptionHandler {
 
     /**
      * 异常处理方法，处理SQL异常
+     *
      * @return
      */
     // 关键点2，选择处理的异常类型
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public req<String> exceptionHandler(SQLIntegrityConstraintViolationException ex){
+    public req<String> exceptionHandler(SQLIntegrityConstraintViolationException ex) {
         // 异常信息，日志提示
         log.error(ex.getMessage());
         // 判断异常的关键词是否存在
-        if(ex.getMessage().contains("Duplicate entry")){
+        if (ex.getMessage().contains("Duplicate entry")) {
             // 空格切分字符串数组
             String[] split = ex.getMessage().split(" ");
             // 索引username是第三个
