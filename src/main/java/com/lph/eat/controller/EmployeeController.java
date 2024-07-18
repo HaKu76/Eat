@@ -80,13 +80,13 @@ public class EmployeeController {
         // 设置初始密码123456，进行md5加密
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
         // 设置创建时间、更新时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+        // employee.setCreateTime(LocalDateTime.now());
+        // employee.setUpdateTime(LocalDateTime.now());
         // 获得当前用户id
-        Long empId = (Long) request.getSession().getAttribute("employee");
+        // Long empId = (Long) request.getSession().getAttribute("employee");
 
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+        // employee.setCreateUser(empId);
+        // employee.setUpdateUser(empId);
         // 调用mybatis-plus的save方法
         employeeService.save(employee);
         // 发送新增成功请求，才能跳转页面
@@ -125,6 +125,7 @@ public class EmployeeController {
 
     /**
      * 修改员工信息
+     *
      * @param request
      * @param employee
      * @return
@@ -133,13 +134,29 @@ public class EmployeeController {
     public req<String> update(HttpServletRequest request, @RequestBody Employee employee) {
         log.info(employee.toString());
         // 通过前端请求获取员工id
-        Long empId = (Long) request.getSession().getAttribute("employee");
+        // Long empId = (Long) request.getSession().getAttribute("employee");
         // 设置更新事件
-        employee.setUpdateTime(LocalDateTime.now());
+        // employee.setUpdateTime(LocalDateTime.now());
         // 设置更新用户id
-        employee.setUpdateUser(empId);
+        // employee.setUpdateUser(empId);
         // 调用mybatis-plus的update方法
         employeeService.updateById(employee);
         return req.success("员工信息修改成功");
+    }
+
+    /**
+     * 根据id查询员工信息
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public req<Employee> getById(@PathVariable Long id) {
+        log.info("根据id查询员工信息");
+        Employee employee = employeeService.getById(id);
+        if (employee != null) {
+            return req.success(employee);
+        }
+        return req.error("没有查询到对应员工信息");
     }
 }
