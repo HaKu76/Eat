@@ -1,33 +1,14 @@
 package com.lph.eat.config;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import com.lph.eat.common.JacksonObjectMapper;
-import com.lph.eat.entity.Employee;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.cbor.MappingJackson2CborHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import java.math.BigInteger;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 
 @Slf4j
 @Configuration
@@ -43,6 +24,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     /**
      * 扩展mvc框架的消息转换器
+     *
      * @param converters
      */
     @Override
@@ -54,6 +36,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         messageConverter.setObjectMapper(new JacksonObjectMapper());
         // 将上面的消息转换器对象追加到mvc框架的转换器集合中
         // 添加到第一个，否则默认自带的消息转换器会优先执行
-        converters.add(0,messageConverter);
+        converters.add(0, messageConverter);
     }
 }
