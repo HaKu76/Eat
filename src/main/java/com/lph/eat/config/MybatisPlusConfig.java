@@ -14,6 +14,7 @@ public class MybatisPlusConfig {
     /**
      * 配置MybatisPlus拦截器。
      * 该拦截器主要用于增强MybatisPlus的功能，例如分页插件的处理。
+     *
      * @return MybatisPlusInterceptor 实例，配置了分页插件以支持MySQL数据库的分页查询。
      */
     @Bean
