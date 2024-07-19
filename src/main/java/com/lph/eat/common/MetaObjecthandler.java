@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class MetaObjecthandler implements MetaObjectHandler {
     /**
      * 新增数据自动填充
+     *
      * @param metaObject
      */
     @Override
@@ -23,7 +24,7 @@ public class MetaObjecthandler implements MetaObjectHandler {
         log.info(metaObject.toString());
 
         long id = Thread.currentThread().getId();
-        log.info("线程id为：{}",id);
+        log.info("线程id为：{}", id);
 
         metaObject.setValue("createTime", LocalDateTime.now());
         metaObject.setValue("updateTime", LocalDateTime.now());
@@ -34,6 +35,7 @@ public class MetaObjecthandler implements MetaObjectHandler {
 
     /**
      * 修改数据自动填充
+     *
      * @param metaObject
      */
     @Override
@@ -42,7 +44,7 @@ public class MetaObjecthandler implements MetaObjectHandler {
         log.info(metaObject.toString());
 
         long id = Thread.currentThread().getId();
-        log.info("线程id为：{}",id);
+        log.info("线程id为：{}", id);
 
         metaObject.setValue("updateTime", LocalDateTime.now());
         // 调用BaseContext.getCurrentId()获取当前登录用户id
