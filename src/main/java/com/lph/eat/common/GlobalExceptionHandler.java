@@ -40,4 +40,17 @@ public class GlobalExceptionHandler {
         // 其他错误
         return req.error("未知错误");
     }
+
+    /**
+     * 异常处理方法，处理自定义异常
+     *
+     * @return
+     */
+    @ExceptionHandler(CustomException.class)
+    public req<String> exceptionHandler(CustomException ex) {
+        // 异常信息，日志提示
+        log.error(ex.getMessage());
+
+        return req.error(ex.getMessage());
+    }
 }
