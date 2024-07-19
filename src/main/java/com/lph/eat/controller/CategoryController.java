@@ -70,8 +70,9 @@ public class CategoryController {
     @DeleteMapping
     public req<String> delete(Long ids) {
         log.info("删除分类，id为：{}", ids);
-        // 先判断是否关联菜品
-        categoryService.removeById(ids);
+        // categoryService.removeById(ids);
+        // 自定义的删除方法，判断是否关联菜品
+        categoryService.remove(ids);
         return req.success("分类信息删除成功");
     }
 
