@@ -39,7 +39,8 @@
                               v-model="loginForm.password"/>
                 </el-form-item>
                 <el-form-item style="width:100%;">
-                    <el-button :loading="loading" @click.native.prevent="handleLogin" class="login-btn" size="medium" style="width:100%;"
+                    <el-button :loading="loading" @click.native.prevent="handleLogin" class="login-btn" size="medium"
+                               style="width:100%;"
                                type="primary">
                         <span v-if="!loading">登录</span>
                         <span v-else>登录中...</span>
