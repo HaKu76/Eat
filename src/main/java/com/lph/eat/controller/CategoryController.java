@@ -76,4 +76,17 @@ public class CategoryController {
         return req.success("分类信息删除成功");
     }
 
+    /**
+     * 根据id修改分类
+     *
+     * @param request
+     * @param category
+     * @return
+     */
+    @PutMapping
+    public req<String> update(HttpServletRequest request, @RequestBody Category category) {
+        log.info("修改分类信息：{}", category);
+        categoryService.updateById(category);
+        return req.success("修改分类信息成功");
+    }
 }
