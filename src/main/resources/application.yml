@@ -19,3 +19,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
+Eat:
+  #上传的临时文件存储路径
+  #  path: ./src/main/resources/images
+  path: C:\images\
