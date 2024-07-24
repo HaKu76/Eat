@@ -91,4 +91,72 @@ public class DishController {
         // 返回查询结果
         return req.success(dishDtoPage);
     }
+
+    /**
+     * 根据id查询菜品信息和对应的口味信息
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    public req<DishDto> get(@PathVariable Long id) {
+        DishDto dishDto = dishService.getByIdWithFlavor(id);
+        return req.success(dishDto);
+    }
+
+    /**
+     * 更新菜品
+     *
+     * @param dishDto
+     * @return
+     */
+    @PutMapping
+    public req<String> update(@RequestBody DishDto dishDto) {
+        log.info(dishDto.toString());
+        dishService.updateWithFlavor(dishDto);
+        return req.success("新增菜品成功");
+    }
+
+    /**
+     * 启售停售菜品
+     * @param status
+     * @param ids
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    public req<String> status(@PathVariable int status, Long[] ids) {
+        for (Long id : ids) {
+            Dish dish = dishService.getById(id);
+            dish.setStatus(status);
+            dishService.updateById(dish);
+        }
+        return req.success("修改状态成功");
+    }
+    @DeleteMapping
+    public req<String> delete(Long[] ids) {
+        for (Long id : ids) {
+            dishService.remove(id);
+        }
+        return req.success("删除成功");
+    }
+
+    /**
+     * 根据条件查询对应菜品数据，与套餐的新增和修改功能关联
+     * @param dish
+     * @return
+     */
+    @GetMapping("/list")
+    public req<List<Dish>> list(Dish dish) {
+        // 构造查询条件
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        // 添加条件，状态为1（起售状态）的菜品才可以新增
+        queryWrapper.eq(Dish::getStatus, 1);
+
+        // 添加排序条件，按更新时间降序排列
+        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+
+        List<Dish> list = dishService.list(queryWrapper);
+
+        return req.success(list);
+    }
 }
