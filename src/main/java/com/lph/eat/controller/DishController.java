@@ -94,6 +94,7 @@ public class DishController {
 
     /**
      * 根据id查询菜品信息和对应的口味信息
+     *
      * @param id
      * @return
      */
@@ -118,6 +119,7 @@ public class DishController {
 
     /**
      * 启售停售菜品
+     *
      * @param status
      * @param ids
      * @return
@@ -131,6 +133,7 @@ public class DishController {
         }
         return req.success("修改状态成功");
     }
+
     @DeleteMapping
     public req<String> delete(Long[] ids) {
         for (Long id : ids) {
@@ -141,6 +144,7 @@ public class DishController {
 
     /**
      * 根据条件查询对应菜品数据，与套餐的新增和修改功能关联
+     *
      * @param dish
      * @return
      */
