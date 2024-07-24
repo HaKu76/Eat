@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * 分类管理控制类
@@ -88,5 +89,24 @@ public class CategoryController {
         log.info("修改分类信息：{}", category);
         categoryService.updateById(category);
         return req.success("修改分类信息成功");
+    }
+
+    /**
+     * 根据条件查询分类数据
+     *
+     * @param category
+     * @return
+     */
+    @GetMapping("/list")
+    public req<List<Category>> list(Category category) {
+        // 条件构造器
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        // 添加条件
+        queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
+        // 添加排序条件
+        queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+        List<Category> list = categoryService.list(queryWrapper);
+        // 返回数据
+        return req.success(list);
     }
 }
