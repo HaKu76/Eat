@@ -23,15 +23,18 @@
 <div id="login" v-loading="loading">
     <div class="divHead">登录</div>
     <div class="divContainer">
-        <el-input maxlength='20' placeholder=" 请输入手机号码" v-model="form.phone"/>
+        <!--        <el-input maxlength='20' placeholder=" 请输入手机号码" v-model="form.phone"/>-->
+        <!--        </el-input>-->
+        <el-input maxlength='20' placeholder=" 请输入邮箱" v-model="form.email"/>
         </el-input>
         <div class="divSplit"></div>
         <el-input maxlength='20' placeholder=" 请输入验证码" v-model="form.code"/>
         </el-input>
         <span @click='getCode'>获取验证码</span>
     </div>
-    <div class="divMsg" v-if="msgFlag">手机号输入不正确，请重新输入</div>
-    <el-button :class="{btnSubmit:1===1,btnNoPhone:!form.phone,btnPhone:form.phone}" @click="btnLogin" type="primary">
+    <div class="divMsg" v-if="msgFlag">邮箱输入不正确，请重新输入</div>
+    <!--判断邮箱是否是空-->
+    <el-button :class="{btnSubmit:1===1,btnNoEmail:!form.email,btnEmail:form.email}" @click="btnLogin" type="primary">
         登录
     </el-button>
 </div>
@@ -52,7 +55,7 @@
         data() {
             return {
                 form: {
-                    phone: '',
+                    email: '',
                     code: ''
                 },
                 msgFlag: false,
@@ -67,21 +70,25 @@
         methods: {
             getCode() {
                 this.form.code = ''
-                const regex = /^(13[0-9]{9})|(15[0-9]{9})|(17[0-9]{9})|(18[0-9]{9})|(19[0-9]{9})$/;
-                if (regex.test(this.form.phone)) {
+                // const regex = /^(13[0-9]{9})|(15[0-9]{9})|(17[0-9]{9})|(18[0-9]{9})|(19[0-9]{9})$/;
+                // 邮箱的输入判断
+                const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (regex.test(this.form.email)) {
                     this.msgFlag = false
-                    this.form.code = (Math.random() * 1000000).toFixed(0)
+                    // this.form.code = (Math.random() * 1000000).toFixed(0)
+                    sendMsgApi({email: this.form.email})
                 } else {
                     this.msgFlag = true
                 }
             },
             async btnLogin() {
-                if (this.form.phone && this.form.code) {
+                if (this.form.email && this.form.code) {
                     this.loading = true
-                    const res = await loginApi({phone: this.form.phone})
+                    // 调用登录Api，传入输入框的邮箱和验证码
+                    const res = await loginApi(this.form)
                     this.loading = false
                     if (res.code === 1) {
-                        sessionStorage.setItem("userPhone", this.form.phone)
+                        sessionStorage.setItem("userEmail", this.form.email)
                         window.requestAnimationFrame(() => {
                             window.location.href = '/front/index.html'
                         })
@@ -89,7 +96,7 @@
                         this.$notify({type: 'warning', message: res.msg});
                     }
                 } else {
-                    this.$notify({type: 'warning', message: '请输入手机号码'});
+                    this.$notify({type: 'warning', message: '请输入邮箱'});
                 }
             }
         }
