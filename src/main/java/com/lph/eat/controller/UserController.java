@@ -45,7 +45,7 @@ public class UserController {
             String code = ValidateCodeUtils.generateValidateCode(4).toString();
             log.info("生成的验证码为：{}", code);
             //调用邮箱服务，发送邮件
-            sendEmailUtils.sendEmail(email, code);
+            // sendEmailUtils.sendEmail(email, code);
             // 需要将生成的验证码保存到Session中
             session.setAttribute(email, code);
             return req.success("邮箱验证码发送成功");
