@@ -73,7 +73,6 @@ public class LoginCheckFilter implements Filter {
         log.info("用户未登录");
         // 5.若未登录则返回登录页面，通过输出流方式向客户端页面响应数据
         response.getWriter().write(JSON.toJSONString(req.error("NOTLOGIN")));
-        return;
     }
 
     /**
