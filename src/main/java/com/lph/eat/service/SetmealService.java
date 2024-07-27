@@ -15,12 +15,12 @@ public interface SetmealService extends IService<Setmeal> {
      *
      * @param setmealDto
      */
-    public void saveWithDish(SetmealDto setmealDto);
+    void saveWithDish(SetmealDto setmealDto);
 
     /**
      * 删除套餐，同时删除套餐和菜品的关联数据
      *
      * @param ids
      */
-    public void removeWithDish(List<Long> ids);
+    void removeWithDish(List<Long> ids);
 }
