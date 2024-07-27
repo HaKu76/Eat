@@ -6,7 +6,7 @@ package com.lph.eat.common;
  * 例如每次获取id时，从当前线程获取是同一个线程同一个id
  */
 public class BaseContext {
-    private static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<Long> threadLocal = new ThreadLocal<>();
 
     /**
      * 获取值
