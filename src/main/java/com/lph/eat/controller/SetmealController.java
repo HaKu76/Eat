@@ -126,4 +126,25 @@ public class SetmealController {
         setmealService.removeWithDish(ids);
         return req.success("套餐数据删除成功");
     }
+
+    /**
+     * 根据条件查询套餐数据
+     *
+     * @param setmeal
+     * @return
+     */
+    @GetMapping("/list")
+    public req<List<Setmeal>> list(Setmeal setmeal) {
+        //条件构造器
+        LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+        // 判断套餐状态，起售还是停售
+        queryWrapper.eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId, setmeal.getCategoryId());
+        queryWrapper.eq(setmeal.getStatus() != null, Setmeal::getStatus, setmeal.getStatus());
+        // 根据更新时间进行降序排列
+        queryWrapper.orderByDesc(Setmeal::getUpdateTime);
+
+        List<Setmeal> list = setmealService.list(queryWrapper);
+
+        return req.success(list);
+    }
 }
