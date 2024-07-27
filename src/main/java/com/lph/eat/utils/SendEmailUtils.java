@@ -42,6 +42,6 @@ public class SendEmailUtils {
 
     @Autowired
     public void setMailSender(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+        SendEmailUtils.mailSender = mailSender;
     }
 }
