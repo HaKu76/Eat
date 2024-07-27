@@ -441,6 +441,7 @@
                     }
                 }
                 const res = await updateCartApi(params)
+
                 if (res.code === 1) {
                     this.dishList.forEach(dish => {
                         if (dish.id === item.id) {
@@ -495,6 +496,7 @@
                 if (res.code === 1) {
                     this.dishList.forEach(dish => {
                         if (dish.id === (item.dishId || item.setmealId)) {
+                            // 判断菜品数量是否为0，若是0则设置数量为undefined
                             dish.number = (res.data.number === 0 ? undefined : res.data.number)
                         }
                     })
@@ -520,7 +522,9 @@
                     for (let ele of this.dishList) {
                         ele.number = undefined
                     }
+                    // 购物车清空
                     this.cartData = []
+                    // 关闭展示购物车
                     this.cartDialogShow = false
                 } else {
                     this.$notify({type: 'warning', message: res.msg});
